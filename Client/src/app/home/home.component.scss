@@ -1,0 +1,50 @@
+p-card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    margin: 1rem;
+  }
+  
+  /* Efecto hover */
+  p-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  
+  /* Estilo para el header (donde va el ícono) */
+  p-card ::ng-deep .p-card-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f4f8;
+    border-bottom: 1px solid #ccc;
+    padding: 1rem 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  /* Ícono dentro del header */
+  ::ng-deep p-card  .p-card-header i {
+    font-size: 3rem;
+    color: #2196F3;
+  }
+  
+  /* Texto dentro de la card */
+  ::ng-deep  p-card p {
+    font-size: 1rem;
+    color: #333;
+    padding: 0 1rem 1rem 1rem;
+    margin: 0;
+  }
+  
+  /* Contenedor que agrupa varias cards */
+  ::ng-deep  .cards-container {
+    // display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+::ng-deep .p-card-content {
+text-align: center !important;
+font-size:medium ;
+  }

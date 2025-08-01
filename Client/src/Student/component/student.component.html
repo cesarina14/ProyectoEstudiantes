@@ -1,0 +1,194 @@
+<div class="container">
+        <div class="modal-header">
+            <h5 class="modal-title">Formulario Estudiante</h5>
+          </div>
+    <div class="modal-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item" (click)="activeTab = 0">
+            <a [class.active]="activeTab === 0" class="nav-link">Información General</a>
+          </li>
+          <li class="nav-item" (click)="activeTab = 1">
+            <a [class.active]="activeTab === 1" class="nav-link">Materias</a>
+          </li>
+        </ul>
+      
+        <div class="tab-content p-3 border border-top-0">
+          <div *ngIf="activeTab === 0">
+        
+                <div class="row col-md-12">
+                    <div class="col-md-4 form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="Student.Name" required>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="Student.LastName" required>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Phone</label>
+                        <input type="phone" class="form-control" [(ngModel)]="Student.Phone">
+                    </div>
+                </div>
+                <div class="row col-md-12">
+          
+                    <div class="col-md-4 form-group">
+                        <label>Age</label>
+                        <input type="number" class="form-control" [(ngModel)]="Student.Age" required>
+                    </div>
+                    <div class="col-md-4 form-group mt-4">
+                        <label>Femenino</label>
+                        <span class="mt-2 p-2">
+                            <input type="radio" name="Gender" [(ngModel)]="Student.Gender" value="F" class="form-group" required />            
+                        </span>
+                        <label>Masculino </label>
+                          <span class="mt-2 p-2">
+                            <input type="radio" name="Gender" [(ngModel)]="Student.Gender" value="M" class="form-group" required  />
+                          </span>
+                       
+                    </div>
+                    <div class="row col-md-4 mt-1  mt-4">
+                        <div class="form-group">
+                            <label>Active</label>
+                            <span class="mt-2 p-2">
+                            <input type="checkbox" class="form-group form-check-input" [(ngModel)]="Student.Active">
+                            </span>
+                        </div>
+                   
+             
+                    </div>
+                </div>
+     
+                <div class="row col-md-12">
+                  
+                    <div class="col-md-4 form-group">
+                        <label>Tutor</label>
+                        <input type="text" class="form-control" [(ngModel)]="Student.Tutor">
+                    </div>
+                    <div class="col-md-4 form-group">
+                    <label>Parentesco: </label>  
+                    <select [(ngModel)]="Student.TutorRelationShip" class="form-control">
+                      <option *ngFor="let p of TutorRelationList"  [value]="p.value | number">{{ p.label }}</option>
+                    </select>
+                 
+                </div>
+                        <div class="col-md-4 form-group">
+                            <label>Tutor Phone</label>
+                            <input type="phone" class="form-control" [(ngModel)]="Student.TutorPhone">
+                        </div>
+                       
+                </div>
+           
+            
+                <ng-template pTemplate="footer">
+                    <button pButton type="button" label="Cancelar" class="p-button-text"></button>
+                    <button pButton type="button" label="Guardar" ></button>
+                  </ng-template>
+          </div>
+          <div *ngIf="activeTab === 1"> 
+    
+
+          <!-- Formulario externo -->
+          <div *ngIf="ModoFormulario" >
+          <div class="col-md-12 row">
+
+            <p-message size="large"  severity="warn"  *ngIf="DisplayMessage"  icon="pi pi-info-circle">{{Message}}</p-message>
+            <div class="col-md-4">
+            <label>Materia: </label>
+                <select [(ngModel)]="SubjectStudent.SubjectId" class="form-control" >
+                  <option *ngFor="let m of SubjectList"  [value]="m.value | number">{{ m.label }}</option>
+                </select>
+             
+            </div>
+              <div class="col-md-4" *ngIf="Student.Id >0">
+              <label>Nota: </label>
+                <input type="number" class="form-control" [(ngModel)]="SubjectStudent.Score" />
+           
+            </div>
+          <div class="col-md-4">
+            <label>Profesor:  </label>
+                <select [(ngModel)]="SelectedTeacherId" class="form-control">
+                  <option *ngFor="let p of TeacherList"  [value]="p.value | number">{{ p.label }}</option>
+                </select>
+            
+          </div>
+           
+            
+          </div>
+          <div class="col-md-12 row">
+            <div class="col-md-4">
+            <label>Trimestre: </label>
+ 
+                <select [(ngModel)]="SubjectStudent.Trimestre" class="form-control">
+                  <option *ngFor="let p of TrimestreList"  [value]="p.value | number">{{ p.label }}</option>
+                </select>
+             
+            </div>
+            <div class="col-md-4">
+                <label>Año: </label>    
+                    <select [(ngModel)]="SelectedYearId" class="form-control">
+                      <option *ngFor="let p of YearList"  [value]="p.value">{{ p.label }}</option>
+                    </select>                
+                </div>
+                <div class="d-flex justify-content-end mb-4 col-md-4">
+                    <div class="mt-4 m-2">
+                        <button class="btn btn-success" (click)="saveSubject()"> <i class="pi pi-check"></i></button>
+                    </div>
+                    <div class="mt-4 m-2">
+                        <button  class="btn btn-secondary" (click)="cancelled()"><i class="pi pi-times"></i></button>
+                    </div>
+          </div>
+      
+    
+     </div>
+            
+          </div>
+          <div class="col-md-12">
+            <div class="d-flex justify-content-end mb-2">
+                <button class="btn btn-primary" (click)="showSubject('agregar')"><i class="pi pi-plus"></i> Add</button>
+          </div>
+          <h3>Listado de materias</h3>
+            <p-table [value]="SubjectStudentList">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Materia</th>
+                    <th>Profesor</th>
+                    <th>Trimestre</th>
+                    <th>Año</th>
+                    <th>Nota</th>
+                    <th>Literal</th>
+                    <th>Acciones</th>
+                  </tr>
+                </ng-template>
+               
+                    <ng-template pTemplate="body" let-fila let-i="rowIndex">
+                        <tr>
+                            <td>{{ getSubject(fila.SubjectId) }}</td>         
+                            <td>{{ getTeacher(fila.TeacherId) }}</td>
+                            <td>{{ getTrimestre(fila.Trimestre) }}</td>
+                            <td>{{ fila.Year }}</td>
+                            <td>{{ fila.Score }}</td>
+                            <td>{{ getLiteral(fila.Score) }}</td>
+                            <td>
+                              <button class="btn btn-primary m-1" (click)="showSubject('editar', i)"><i class="pi pi-pencil"></i></button>
+                              <button class="btn btn-danger" (click)="removeRow(i)"><i class="pi pi-times"></i></button>
+                            </td>
+                        </tr>
+                   
+                    </ng-template>
+           
+         
+              </p-table>
+          </div>
+          </div>
+        </div>
+          <div class=" modal-footer">
+           <div class="mt-2 mb-4">
+              <button class="btn btn-success" label="Save" (click)="onSubmit()"><i class="pi pi-save"></i> Guardar</button>
+           </div>
+           <div class="mt-2 mb-4 m-2">
+            <button class="btn  btn-secondary" label="Cancel" (click)="onClose()" severity="secondary"> <i class="pi pi-times"></i> Cerrar</button>
+          </div>
+     </div>  
+     <p-toast></p-toast>
+
+ 

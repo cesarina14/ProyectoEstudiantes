@@ -1,0 +1,14 @@
+
+<div class="layout">
+  <button class="menu-toggle  btn btn-primary" (click)="MenuVisible = !MenuVisible">☰</button>
+  <div *ngIf="MenuVisible" class="sidebar"> 
+    <p-menu [model]="MenuItems"></p-menu>
+  </div>
+
+
+  <div class="content m-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+

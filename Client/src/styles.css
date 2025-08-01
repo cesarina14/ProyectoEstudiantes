@@ -1,0 +1,172 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.p-dialog-mask {
+    background-color: rgba(0, 0, 0, 0.7) !important; /* negro con 70% opacidad */
+  }
+  .p-dialog {
+    background-color: #fff !important; /* fondo blanco */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+/* Forzar fondo blanco sólido y sombra al popup del calendario */
+.p-datepicker {
+    background-color: #fff !important;  /* Fondo blanco */
+    border: 1px solid #ccc !important;  /* Borde gris */
+    border-radius: 6px !important;      /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) !important; /* Sombra */
+    position: absolute !important;       /* Posición absoluta */
+    z-index: 1100 !important;            /* Que esté encima */
+    opacity: 1 !important;                /* Sin transparencia */
+    filter: none !important;              /* Sin filtros que transparenten */
+    user-select: auto !important;
+  }
+  
+  /* Fondo blanco dentro de la tabla del calendario */
+  .p-datepicker-calendar {
+    background-color: #fff !important;
+    border-collapse: collapse !important;
+    width: 100% !important;
+    user-select: none !important;
+  }
+  
+  /* Días del calendario */
+  .p-datepicker-calendar td {
+    background-color: transparent !important;
+    padding: 6px 10px !important;
+    cursor: pointer !important;
+    color: #333 !important;
+  }
+  
+  /* Hover de días */
+  .p-datepicker-calendar td:hover:not(.p-disabled) {
+    background-color: #cce4ff !important;
+    border-radius: 4px !important;
+  }
+  
+  /* Día seleccionado */
+  .p-datepicker-calendar td.p-highlight {
+    background-color: #007ad9 !important;
+    color: white !important;
+    border-radius: 4px !important;
+  }
+  /* modal-styles.css */
+
+/* Overlay (fondo oscuro) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Contenedor modal */
+  .modal-dialog {
+    background: #fff;
+    border-radius: 6px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow: hidden;
+  }
+  
+  /* Header */
+  .modal-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Botón cerrar */
+  .modal-header .close-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+  
+  /* Body */
+  .modal-body {
+    padding: 1rem 1.5rem;
+    overflow-y: auto;
+    flex: 1 1 auto;
+  }
+  
+  /* Footer */
+  .modal-footer {
+    padding: 1rem 1.5rem;
+    text-align: right;
+  }
+  
+  /* Estilo general del contenedor del toast */
+.p-toast {
+    z-index: 10000;
+    pointer-events: none;
+  }
+  
+  /* Fondo y estilo del mensaje */
+  .p-toast-message {
+    background-color: #fff; /* blanco sólido */
+    color: #000;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    pointer-events: all;
+  }
+  
+  /* Tipo: éxito */
+  .p-toast-message-success {
+    background-color: #e6ffed !important;
+    border-left: 6px solid #28a745 !important;
+    color: #155724 !important;
+  }
+  
+  /* Tipo: error */
+  .p-toast-message-error {
+    background-color: #ffe6e6 !important;
+    border-left: 6px solid #dc3545 !important;
+    color: #721c24 !important;
+  }
+  
+  /* Tipo: advertencia */
+  .p-toast-message-warn {
+    background-color: #fff3cd !important;
+    border-left: 6px solid #ffc107 !important;
+    color: #856404 !important;
+  }
+  
+  /* Tipo: info */
+  .p-toast-message-info {
+    background-color: #d1ecf1;
+    border-left: 6px solid #17a2b8;
+    color: #0c5460;
+  }
+  
+  /* Botón cerrar */
+  .p-toast-icon-close {
+    color: #333;
+    opacity: 1;
+  }
+  ::ng-deep .p-toast-message {
+    background-color: #222;
+    color: white;
+  }
+
+  
+  

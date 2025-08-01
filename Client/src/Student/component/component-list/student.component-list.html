@@ -1,0 +1,82 @@
+
+<div class="container">
+   
+
+    <div class="col-md-12 row ">
+        <h1>Listado de estudiantes <i class="pi pi-users"></i>  </h1> 
+        <div class="d-flex justify-content-end mb-3">
+            <button class="btn btn-primary" (click)="Add()">
+                <i class="pi pi-plus"></i> Agregar
+            </button>
+        </div>
+<div class="col-md-12">
+    <div class="col-md-3">
+            <!-- <i class="pi pi-search"></i> -->
+        <input type="text" pInputText placeholder="Buscar...." (input)="dt.filterGlobal($event.target.value, 'contains')" class="form-control mb-3"  />
+    </div>
+    
+    <p-table  [value]="StudentList"  class="form-group" #dt  [paginator]="true" [rows]="10" [globalFilterFields]="['Name', 'LastName', 'Age','Gender']">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>#</th>
+                <th>Nombre Completo</th>
+                <th>Edad</th>
+                <th>Genero</th>
+                <th>Status</th>
+                <th>Fecha Creación</th>
+                <th>Accion</th>
+            </tr>
+        </ng-template> 
+        <ng-template pTemplate="body" let-student let-i="rowIndex">
+            <tr>
+                <td>{{ student.Id }}</td>
+                <td>{{ student.Name + " " + student.LastName}}</td>
+                <td>{{ student.Age }}</td>
+                <td>
+                    <button *ngIf="student.Gender == 'F'" class="btn btn-danger">Femenino</button>
+                    <button *ngIf="student.Gender != 'F'" class="btn btn-primary">Masculino</button>
+                  </td>
+                  <td>
+                    <button *ngIf="student.Active === true" class="btn btn-success">Activo</button>
+                    <button *ngIf="student.Active === false " class="btn btn-secondary">Inactivo</button>
+                  </td>
+                <td>{{student.CreatedAt | date:'yyyy-MM-dd' }}</td>
+                <td>
+                    <button class="btn btn-primary" (click)="Edit(student)"><i class="pi pi-pencil"></i></button>
+                    <button class="btn btn-secondary" (click)="onDelete(i)"><i class="pi pi-times"></i></button>
+                  </td>
+            </tr>
+        </ng-template> 
+    </p-table>
+</div>
+<p-dialog class="modal-header" [(visible)]="displayConfirmDialog"
+[modal]="true"[closable]="false"[resizable]="false"[draggable]="false" style="width: 200px;">
+<div class="modal-content">
+    <div class="modal-header">
+        <h3 style="text-align: center;">Confirmación Eliminación</h3>
+    </div>
+    <div class="modal-body">
+        <h4>
+           <i class="pi pi-info-circle"></i>  ¿Está seguro que desea eliminar este estudiante?
+        </h4>
+    </div>
+    
+    <div class="modal-footer">
+        <button  type="button" label="Sí"  class="btn btn-success  m-2" (click)="onConfirmDelete()"><i class="pi pi-check"></i></button>
+        <button  type="button" label="No"   class="btn btn-secondary" (click)="onCancelDelete()"><i class="pi pi-times"></i> </button>
+    </div>
+</div>
+
+</p-dialog>
+    </div>
+
+
+    <p-toast></p-toast>
+
+
+
+</div>
+
+
+
+

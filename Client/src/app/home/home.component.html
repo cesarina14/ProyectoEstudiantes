@@ -1,0 +1,36 @@
+  <div class="container">
+    <div class="home-container">
+        <div class="school-card">
+         <!-- Icono Home SVG grande -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 3.293l6 6V15h-4v-4H6v4H2v-5.707l6-6zM7.5 1.5L1 8h2v6h3v-4h4v4h3V8h2L8.5 1.5a.5.5 0 0 0-.5 0z"/>
+  </svg>
+
+
+          <h1>Bienvenido al Sistema Escolar</h1>
+          <p>Selecciona una opción para continuar</p>
+        </div>
+      </div>
+    <div class="col-md-12 row" *ngIf="navRoutes; else noRoutes">
+   
+        <div class="cards-container col-md-4 " *ngFor="let route of navRoutes">
+            <p-card  (click)="goTo(route?.path!)">
+            
+                <ng-template pTemplate="header">
+                  <i [class]="route?.icon" style="font-size: 3rem; color: #2a91e6;"></i>
+         
+                </ng-template>
+                <span style="text-align: center;">{{ route?.title }}</span>
+              </p-card>
+        </div>
+    
+        </div>
+    
+      
+
+
+    <ng-template #noRoutes>
+      <p>No hay rutas disponibles.</p>
+    </ng-template>
+
+  </div>

@@ -1,0 +1,123 @@
+
+:host {
+
+  ::ng-deep .p-datatable-thead > tr > th {
+    background-color: #2196F3;
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Cambiar filas al pasar el mouse */
+  ::ng-deep.p-datatable-tbody > tr:hover {
+    background-color: #f1f1f1 !important;
+    cursor: pointer;
+  }
+  /* Cambiar el color de fondo del encabezado */
+  ::ng-deep .p-datatable-thead > tr > th {
+    color: #fff;
+    font-weight: 600;
+    border-bottom: 2px solid #115293;
+    padding: 12px 15px;
+  }
+  
+  /* Cambiar el color y cursor al pasar sobre filas */
+  ::ng-deep .p-datatable-tbody > tr:hover {
+    background-color: #e3f2fd !important; /* azul clarito */
+    cursor: pointer;
+  }
+  
+  /* Celdas con padding más cómodo */
+  ::ng-deep .p-datatable-tbody > tr > td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Alternar colores en filas para mejor lectura */
+  ::ng-deep .p-datatable-tbody > tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+  
+  /* Borde general y sombra */
+  ::ng-deep.p-datatable {
+    box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  /* Estilo para las filas del cuerpo */
+::ng-deep .p-datatable-tbody > tr {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Padding cómodo para cada celda */
+::ng-deep .p-datatable-tbody > tr > td {
+  padding: 12px 16px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Fila hover (al pasar el mouse) */
+::ng-deep .p-datatable-tbody > tr:hover {
+  background-color: #e3f2fd !important;
+  cursor: pointer;
+}
+
+/* Alternar colores por fila */
+::ng-deep .p-datatable-tbody > tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Última fila sin borde inferior */
+::ng-deep .p-datatable-tbody > tr:last-child {
+  border-bottom: none;
+}
+/* Estilo general del toast */
+.p-toast {
+  z-index: 9999;
+}
+
+/* Estilo del contenedor de mensajes individuales */
+.p-toast-message {
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Estilos por tipo de mensaje */
+.p-toast-message-success {
+  background-color: #d4edda;
+  border-left: 6px solid #28a745;
+  color: #155724;
+}
+
+.p-toast-message-info {
+  background-color: #d1ecf1;
+  border-left: 6px solid #17a2b8;
+  color: #0c5460;
+}
+
+.p-toast-message-warn {
+  background-color: #fff3cd;
+  border-left: 6px solid #ffc107;
+  color: #856404;
+}
+
+.p-toast-message-error {
+  background-color: #f8d7da;
+  border-left: 6px solid #dc3545;
+  color: #721c24;
+}
+
+/* Icono del toast */
+.p-toast-icon-close {
+  color: #333;
+}
+
+/* Margen entre mensajes */
+.p-toast-message + .p-toast-message {
+  margin-top: 1rem;
+}
+
+  
+}
