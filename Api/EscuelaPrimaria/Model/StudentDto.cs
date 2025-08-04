@@ -34,7 +34,7 @@ namespace EscuelaPrimaria.Model
             TutorRelationShip = entity.TutorRelationShip;
             Active = entity.Active ?? false;
             SubjectStudentList = entity.SubjectStudents.Select(g => new SubjectStudentDto(g)).ToList();
-            CreatedAt = DateTime.Now;
+            CreatedAt = entity.CreatedAt.HasValue ? entity.CreatedAt : DateTime.Now;
             CreatedBy = "Test";
 
         }

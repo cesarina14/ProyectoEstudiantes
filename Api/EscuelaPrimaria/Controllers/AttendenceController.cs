@@ -10,9 +10,9 @@ namespace EscuelaPrimaria.API.Controllers
     [Route("api/[controller]")]
     public class AttendenceController : ControllerBase
     {
-        private readonly IAttendenceeService _attendenceService;
+        private readonly IAttendenceService _attendenceService;
 
-        public AttendenceController(IAttendenceeService attendenceService)
+        public AttendenceController(IAttendenceService attendenceService)
         {
             _attendenceService = attendenceService;
         }

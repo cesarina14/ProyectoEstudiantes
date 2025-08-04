@@ -10,12 +10,14 @@ namespace EscuelaPrimaria.Service.NewFolder
 {
     public class StudentService : IStudentService
     {
-        private readonly SchoolContext _Context;
+       
         private readonly ILoggingService _LoggingService;
-        public StudentService(SchoolContext _context, ILoggingService _loggingService)
+        private readonly IStudentRespository _Respository;
+        public StudentService(SchoolContext _context, ILoggingService _loggingService, IStudentRespository _respository)
         {
-            _Context = _context;
+            
             _LoggingService = _loggingService;
+            _Respository = _respository;
         }
         public async Task<StudentResponse> Add(StudentRequest request)
         {
@@ -23,8 +25,8 @@ namespace EscuelaPrimaria.Service.NewFolder
             {
 
                 var _entity = request.ToEntity();
-                _Context.Students.Add(_entity);
-                await _Context.SaveChangesAsync();
+                await _Respository.AddAsync(_entity);
+                
                 return new StudentResponse { Success = true, Value = new StudentDto(_entity) };
             }
             catch (Exception ex)
@@ -46,7 +48,7 @@ namespace EscuelaPrimaria.Service.NewFolder
         {
             try
             {
-                var _entity = _Context.Students.Find(id);
+                var _entity = await _Respository.Get(id);
                 if (_entity == null)
                 {
                     return new StudentResponse
@@ -57,8 +59,8 @@ namespace EscuelaPrimaria.Service.NewFolder
 
                     };
                 }
-                _Context.Students.Remove(_entity);
-                await _Context.SaveChangesAsync();
+                 _Respository.Delete(_entity);
+              
             }
             catch (Exception ex)
             {
@@ -81,8 +83,8 @@ namespace EscuelaPrimaria.Service.NewFolder
             try
             {
 
-                var query = _Context.Students.Include(s => s.SubjectStudents).AsQueryable();
-                var _entity = query.FirstOrDefault(x => x.Id == id);
+                var _entity = _Respository.GetWithSubjectStudent(id);
+             
                 if (_entity == null)
                 {
                     return new StudentResponse
@@ -113,8 +115,8 @@ namespace EscuelaPrimaria.Service.NewFolder
         {
             try
             {
-                var query = _Context.Students.Include(s => s.SubjectStudents).AsQueryable();
-                var _entity = query.FirstOrDefault(x => x.Id == request.Id);
+                
+                var _entity = _Respository.GetWithSubjectStudent(request.Id);
                 if (_entity == null)
                 {
                     return new StudentResponse
@@ -127,7 +129,7 @@ namespace EscuelaPrimaria.Service.NewFolder
                 }
 
                 request.UpdateEntity(_entity);
-                await _Context.SaveChangesAsync();
+                  _Respository.Update(_entity);
                 return new StudentResponse { Success = true, Value = new StudentDto(_entity) };
             }
             catch(Exception ex)
@@ -149,9 +151,7 @@ namespace EscuelaPrimaria.Service.NewFolder
             try
             {
 
-                var query = _Context.Students.Include(s => s.SubjectStudents).AsQueryable();
-
-                var dtoList = query.Select(e => new StudentDto(e)).ToList();
+                var dtoList = _Respository.GetAllStudents().Select(e => new StudentDto(e)).ToList();
                 return new StudentResponse { Success = true, Value = dtoList };
             }
             catch (Exception ex)
@@ -172,9 +172,9 @@ namespace EscuelaPrimaria.Service.NewFolder
             {
                 var _now = DateTime.Now;
 
-                var _list = await _Context.Students.Where(e => !_Context.Attendence
+                var _list =  _Respository.GetAllStudents().Where(e => !e.Attendences
                                   .Any(a => a.StudentId == e.Id && a.Date.Date == _now.Date))
-                                  .ToListAsync();
+                                  .ToList();
 
                 var dtoList = _list.Select(e => new StudentDto(e)).ToList();
                 return new StudentResponse { Success = true, Value = dtoList };
@@ -196,36 +196,12 @@ namespace EscuelaPrimaria.Service.NewFolder
         {
             try
             {
-                var data = await _Context.SubjectStudent.Where(s => s.Score.HasValue).ToListAsync();
-
-                var summaryList = data
-                        .GroupBy(ss => ss.Score.Value switch
-                        {
-                            >= 90 => "A",
-                            >= 80 => "B",
-                            >= 70 => "C",
-                            >= 60 => "D",
-                            _ => "F"
-                        })
-                        .Select(g => new StudentCalificationSummaryResponse
-                        {
-                            Literal = g.Key,
-                            Count = g.LongCount(),
-                            Range = g.Key switch
-                            {
-                                "A" => "90 - 100",
-                                "B" => "80 - 89",
-                                "C" => "70 - 79",
-                                "D" => "60 - 69",
-                                "F" => "< 60",
-                                _ => "N/A"
-                            }
-                        }).ToList();
+                var list =  _Respository.getListSummaryAsync().Result.ToList();
                 return new Response<List<StudentCalificationSummaryResponse>>
                 {
                     Code = 0,
                     Success = true,
-                    Value = summaryList
+                    Value = list
                 };
             }
             catch(Exception ex)

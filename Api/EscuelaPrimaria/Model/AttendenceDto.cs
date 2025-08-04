@@ -19,7 +19,7 @@ namespace EscuelaPrimaria.Model
             Date = entity.Date != null ? entity.Date : DateTime.Now;
             StudentId = entity.StudentId;
             Present = entity.Present;
-            CreatedAt = DateTime.Now;
+            CreatedAt = entity.CreatedAt.HasValue ? entity.CreatedAt : DateTime.Now;
             CreatedBy = "Test";
         }
         public void UpdateEntity(Attendence entity)

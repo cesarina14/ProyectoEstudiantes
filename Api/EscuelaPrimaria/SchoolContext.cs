@@ -16,11 +16,15 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // StudentSubject: muchos a muchos
-
-
             modelBuilder.Entity<Subject>().HasKey(e => e.Id);
             modelBuilder.Entity<Subject>().Property(a => a.Id).ValueGeneratedOnAdd();  
             modelBuilder.Entity<Subject>().Property(s => s.Name);
+            modelBuilder.Entity<Subject>().Property(s => s.CreatedAt);
+            modelBuilder.Entity<Subject>().Property(s => s.CreatedBy);
+            modelBuilder.Entity<Subject>().Property(s => s.UpdatedAt);
+            modelBuilder.Entity<Subject>().Property(s => s.UpdatedBy);
+
+
 
             modelBuilder.Entity<Student>().HasKey(e => e.Id);
             modelBuilder.Entity<Student>().Property(a => a.Id).ValueGeneratedOnAdd();
@@ -61,7 +65,7 @@
 
             modelBuilder.Entity<Attendence>().HasKey(e => e.Id);
             modelBuilder.Entity<Attendence>().Property(a => a.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<Attendence>().HasKey(e => new { e.StudentId,e.Date });
+            modelBuilder.Entity<Attendence>();
             modelBuilder.Entity<Attendence>()
                         .HasOne(a => a.Student)
                         .WithMany(s => s.Attendences)

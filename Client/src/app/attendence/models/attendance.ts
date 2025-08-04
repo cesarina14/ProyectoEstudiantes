@@ -4,8 +4,8 @@ export class Attendence extends Identity{
 StudentId : number =0;
 Date : Date = new Date();
 Present: boolean=false;
-CreateAt : Date = new Date();
-CreateBy : string ='';
+CreatedAt : Date = new Date();
+CreatedBy : string ='';
 constructor(init?: Partial<Attendence>) {
     super();
     Object.assign(this, init);

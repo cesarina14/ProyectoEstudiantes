@@ -1,4 +1,4 @@
 export abstract class Identity {
     Id: number =0;
-    Active: boolean | null = false;
+    Active: boolean | null = true;
 }

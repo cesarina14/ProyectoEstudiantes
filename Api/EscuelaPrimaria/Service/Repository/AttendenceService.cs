@@ -1,17 +1,20 @@
-﻿using EscuelaPrimaria.Model;
+﻿using Azure.Core;
+using EscuelaPrimaria.Collection;
+using EscuelaPrimaria.Entity;
+using EscuelaPrimaria.Model;
 using EscuelaPrimaria.Request;
 using EscuelaPrimaria.Response;
 using Microsoft.EntityFrameworkCore;
 
 namespace EscuelaPrimaria.Service.NewFolder
 {
-    public class AttendenceService : IAttendenceeService
+    public class AttendenceService : IAttendenceService
     {
-        private readonly SchoolContext _Context;
+        private readonly IAttendenceRespository _Respository;
         private readonly ILoggingService _LoggingService;
-        public AttendenceService(SchoolContext context, ILoggingService _loggingService)
+        public AttendenceService(IAttendenceRespository _repository, ILoggingService _loggingService)
         {
-            _Context = context;
+            _Respository = _repository;
             _LoggingService = _loggingService;
         }
         public async Task<AttendenceResponse> Add(List<AttendenceRequest> request)
@@ -23,8 +26,8 @@ namespace EscuelaPrimaria.Service.NewFolder
                 try
                 {
 
-                    _Context.Attendence.Add(_entity);
-                    await _Context.SaveChangesAsync();
+                    await _Respository.AddAsync(_entity);
+                   
                 }
                 catch (Exception ex)
                 {
@@ -46,7 +49,7 @@ namespace EscuelaPrimaria.Service.NewFolder
         {
             try
             {
-                var _entity = _Context.Attendence.Find(id);
+                var _entity =  await _Respository.Get(id);
                 if (_entity == null)
                 {
                     return new AttendenceResponse
@@ -57,8 +60,8 @@ namespace EscuelaPrimaria.Service.NewFolder
 
                     };
                 }
-                _Context.Attendence.Remove(_entity);
-                await _Context.SaveChangesAsync();
+                 _Respository.Delete(_entity);
+     
             }
             catch (Exception ex)
             {
@@ -79,7 +82,8 @@ namespace EscuelaPrimaria.Service.NewFolder
         {
             try
             {
-                var _entity = _Context.Attendence.FirstOrDefault(x => x.Id == id);
+                var List = await _Respository.GetAllAsync();
+                var _entity = List.FirstOrDefault(r => r.Id ==id);
                 if (_entity == null)
                 {
                     return new AttendenceResponse
@@ -110,7 +114,7 @@ namespace EscuelaPrimaria.Service.NewFolder
         {
             try
             {
-                var query = _Context.Attendence.AsQueryable();
+                var query = await _Respository.GetAllAsync();
                 var dtoList = query.Select(e => new AttendenceDto(e)).ToList();
                 return new AttendenceResponse { Success = true, Value = dtoList };
             }
@@ -132,7 +136,8 @@ namespace EscuelaPrimaria.Service.NewFolder
             {
 
 
-                var _entity = _Context.Attendence.FirstOrDefault(x => x.Id == request.Id);
+                var List = await _Respository.GetAllAsync();
+                var _entity = List.FirstOrDefault(r=> r.Id == request.Id);
                 if (_entity == null)
                 {
                     return new AttendenceResponse
@@ -145,7 +150,7 @@ namespace EscuelaPrimaria.Service.NewFolder
                 }
 
                 request.UpdateEntity(_entity);
-                await _Context.SaveChangesAsync();
+               _Respository.Update(_entity);
 
                 return new AttendenceResponse { Success = true, Value = new AttendenceDto(_entity) };
             }

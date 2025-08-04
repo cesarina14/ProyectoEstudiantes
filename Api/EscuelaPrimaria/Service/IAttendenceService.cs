@@ -4,7 +4,7 @@ using EscuelaPrimaria.Response;
 
 namespace EscuelaPrimaria.Service
 {
-    public interface IAttendenceeService
+    public interface IAttendenceService
     {
         Task<AttendenceResponse> Add(List<AttendenceRequest> request);
         Task<AttendenceResponse> Update(AttendenceRequest request);

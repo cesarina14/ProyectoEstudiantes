@@ -1,7 +1,7 @@
 export enum Subject{
-    LenguaEspanola =1,
-    Matematica=4,
-    Sociales=2,
-    Naturales=3
+    LenguaEspanola =5,
+    Matematica=8,
+    Sociales=6,
+    Naturales=7
     
 }

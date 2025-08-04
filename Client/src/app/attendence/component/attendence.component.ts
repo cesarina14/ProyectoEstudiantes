@@ -88,6 +88,7 @@ export class AttendanceComponent implements OnInit {
   }
 
   public ShowModal(): void {
+    
     this.ShowDialog = true;
   }
   public Hide(): void {
@@ -109,7 +110,7 @@ export class AttendanceComponent implements OnInit {
         _newAttendence.Id = _element.Id;
        _newAttendence.Present = _element.IsPresent;
        _newAttendence.StudentId = _element.StudentId;
-       _newAttendence.CreateAt = _element.CreatedAt;
+       _newAttendence.CreatedAt = _element.CreatedAt;
        this.AttendanceList.push(_newAttendence)
 
     });
@@ -124,8 +125,7 @@ export class AttendanceComponent implements OnInit {
             await this.loadStudentList();
             await this.loadAttendanceList();
             this._cdr.detectChanges();
-  
-      
+
           }
           else {
             this.warning();
@@ -141,8 +141,7 @@ export class AttendanceComponent implements OnInit {
             await this.loadStudentList();
             await this.loadAttendanceList();
             this._cdr.detectChanges();
-      
-
+    
           }
           else {
             this.warning();
@@ -150,15 +149,20 @@ export class AttendanceComponent implements OnInit {
           }
        })
       }
+      
+         if(this.ShowDialog ==false) {
+ this.AttendanceWithStudentList=[];
+         }
+         
     
     }
+  
   }
   private async loadAttendanceList(): Promise<void> {
       const attendenceResponse = await firstValueFrom(this._service.List());
   
       if (attendenceResponse.Success) {
         this.AttendanceWithStudentTable = [];
-  
         attendenceResponse.Value.forEach(_studentElement => {
           const _student = this._studentList.find(r => r.Id === _studentElement.StudentId);
   
@@ -167,6 +171,8 @@ export class AttendanceComponent implements OnInit {
           _newElement.IsPresent = _studentElement.Present;
           _newElement.StudentId = _studentElement.StudentId;
           _newElement.StudentName = `${_student?.Name ?? ''} ${_student?.LastName ?? ''}`;
+          _newElement.CreatedAt = _studentElement.CreatedAt;
+          _newElement.Date =_studentElement.Date;
   
           this.AttendanceWithStudentTable.push(_newElement);
         });
@@ -198,9 +204,9 @@ export class AttendanceComponent implements OnInit {
 }
 warning() {
   this._messageService.add({
-    severity: 'success',
+    severity: 'warning',
     summary: 'Warning',
-    detail: 'Se ha realizado un error favor de validar',
+    detail: 'Se ha producido un error favor de validar',
   });
 }
 }

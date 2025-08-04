@@ -1,4 +1,5 @@
 using EscuelaPrimaria;
+using EscuelaPrimaria.Collection;
 using EscuelaPrimaria.Service;
 using EscuelaPrimaria.Service.NewFolder;
 using EscuelaPrimaria.Service.Repository;
@@ -29,12 +30,14 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IAttendenceeService, AttendenceService>();
+builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped(typeof(IRespository<>), typeof(Respository<>));
+builder.Services.AddScoped<IStudentRespository,StudentCollection>();
+builder.Services.AddScoped<IAttendenceRespository, AttendenceCollection>();
+builder.Services.AddScoped<IAttendenceService, AttendenceService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ILoggingService, LoggingService>();
-builder.Services.AddScoped(typeof(IRespositoty<>), typeof(Respository<>));
-builder.Services.AddDbContext<SchoolContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 builder.Services.AddCors(options =>
 {

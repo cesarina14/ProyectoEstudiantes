@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EscuelaPrimaria.Service.Repository
 {
-    public class Respository<T> : IRespositoty<T> where T : class
+    public class Respository<T> : IRespository<T> where T : class
     {
         protected readonly DbContext _context;
         protected readonly DbSet<T> _dbSet;
@@ -14,15 +14,18 @@ namespace EscuelaPrimaria.Service.Repository
         }
         public async Task AddAsync(T Entity)
         {
-            await _dbSet.AddAsync(Entity);
+            
+             _dbSet.Add(Entity);
+            await _context.SaveChangesAsync();
         }
 
         public void Delete(T Entity)
         {
             _dbSet.Remove(Entity);
+             _context.SaveChanges();
         }
 
-        public async Task<T> Get(int Id)
+        public async Task<T> Get(long Id)
         {
             return await _dbSet.FindAsync(Id);
         }
@@ -35,6 +38,7 @@ namespace EscuelaPrimaria.Service.Repository
         public void Update(T Entity)
         {
             _dbSet.Update(Entity);
+             _context.SaveChanges();
         }
         public virtual async Task SaveAsync()
         {
