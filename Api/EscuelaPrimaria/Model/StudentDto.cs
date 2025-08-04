@@ -3,7 +3,7 @@ using EscuelaPrimaria.Entity;
 
 namespace EscuelaPrimaria.Model
 {
-    public  class StudentDto : IDto
+    public class StudentDto : IDto
     {
         public string Name { get; set; }
         public string? Email { get; set; }
@@ -18,10 +18,10 @@ namespace EscuelaPrimaria.Model
 
         public StudentDto()
         {
-            
+
         }
 
-        public   StudentDto(Student entity)
+        public StudentDto(Student entity)
         {
             Id = entity.Id;
             Name = entity.Name;
@@ -48,46 +48,49 @@ namespace EscuelaPrimaria.Model
             student.Active = Active;
             student.TutorRelationShip = TutorRelationShip;
             student.TutorPhone = TutorPhone;
-            student.Tutor  = Tutor;
+            student.Tutor = Tutor;
             student.UpdatedAt = DateTime.Now;
             student.UpdatedBy = "Test";
             if (SubjectStudentList.Any())
             {
-                foreach (var subject in SubjectStudentList)
+                foreach (var _entity in SubjectStudentList)
                 {
-                    var existing = student.SubjectStudents.FirstOrDefault(g => g.Id == subject.Id);
-
-                    if (existing != null)
+                    if (_entity.Id <= 0)
                     {
-                        // Actualizar calificación existente
-                        existing.Score = subject.Score;
-                        existing.Trimestre = subject.Trimestre;
-                        existing.Active = subject.Active;
-                        existing.TeacherId = subject.TeacherId;
-                        existing.SubjectId = subject.SubjectId;
-                        existing.Year = subject.Year;
-                        existing.UpdatedAt = DateTime.Now;
-                        existing.UpdatedBy = "Test";
+                        var new_subject = new SubjectStudent
+                        {
+                            StudentId = student.Id,
+                            SubjectId = _entity.SubjectId,
+                            Score = _entity.Score,
+                            TeacherId = _entity.TeacherId,
+                            Date = _entity.Date,
+                            Trimestre = _entity.Trimestre,
+                            Active = _entity.Active,
+                            Year = _entity.Year,
+                            CreatedAt = DateTime.Now,
+                            CreatedBy = "Test"
+                        };
+                        student.SubjectStudents.Add(new_subject);
                     }
                     else
                     {
-                        // Agregar nueva calificación
-                        student.SubjectStudents.Add(new SubjectStudent
-                        {
-                            StudentId = student.Id,
-                            SubjectId = subject.SubjectId,
-                            Score = subject.Score,
-                            TeacherId = subject.TeacherId,
-                            Date =  subject.Date,
-                            Trimestre = subject.Trimestre,
-                            Active = subject.Active,
-                            Year = subject.Year,
-                            CreatedAt = subject.CreatedAt,
-                            CreatedBy = "Test"
-                        });
-                    }
-                }
+                        var existing = student.SubjectStudents.FirstOrDefault(g => g.Id == _entity.Id);
 
+                        if (existing != null)
+                        {
+                            // Actualizar calificación existente
+                            existing.Score = _entity.Score;
+                            existing.Trimestre = _entity.Trimestre;
+                            existing.Active = _entity.Active;
+                            existing.TeacherId = _entity.TeacherId;
+                            existing.SubjectId = _entity.SubjectId;
+                            existing.Year = _entity.Year;
+                            existing.UpdatedAt = DateTime.Now;
+                            existing.UpdatedBy = "Test";
+                        }
+                    }
+
+                }
 
                 var toRemove = student.SubjectStudents
                     .Where(g => !SubjectStudentList.Any(dto => dto.Id == g.Id))
@@ -97,9 +100,9 @@ namespace EscuelaPrimaria.Model
                 {
                     student.SubjectStudents.Remove(g);
                 }
+
             }
 
         }
-
-}
+    }
 }

@@ -22,10 +22,14 @@ namespace EscuelaPrimaria.Model
             StudentId = entity.StudentId;
             SubjectId = entity.SubjectId;
             TeacherId = entity.TeacherId;
-            Year = entity.Year;
-            Trimestre = entity.Trimestre;
-            Score = entity.Score;
+            Year = entity?.Year;
+            Trimestre = entity?.Trimestre;
+            Score = entity?.Score;
             Date = entity.Date;
+            CreatedAt = entity.CreatedAt;
+            UpdatedAt = entity.UpdatedAt;
+            UpdatedBy = entity.UpdatedBy;
+            CreatedBy = entity.CreatedBy;
 
 
         }
